@@ -42,6 +42,11 @@ class DataFrameImputer(TransformerMixin):
         return X.fillna(self.fill)
 train_data = DataFrameImputer().fit_transform(train_data)
 
-print(train_data['Sex'],train_data['Age'])
-
+# print(train_data['Sex'],train_data['Age'])
+columns = train_data.columns
+print(columns.shape)
+encoder = OrdinalEncoder()
+train_data = encoder.fit_transform(train_data)
+print(train_data.shape)
+train_data = pd.DataFrame(data=train_data[:,:],index=train_data[:,0],columns = columns)
 train_data.to_csv('./data/train_transformed.csv')
