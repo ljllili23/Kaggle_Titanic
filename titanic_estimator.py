@@ -26,7 +26,7 @@ del train_data['Embarked']
 # cabins = enc.fit_transform(cabins)
 # print(cabins[0:9], cabins.dtype, cabins.shape)
 # print(cabins.value_counts())
-print(train_data.columns)
+# print(train_data.columns,train_data)
 sex = train_data['Sex']
 print(sex.value_counts())
 class DataFrameImputer(TransformerMixin):
@@ -34,9 +34,14 @@ class DataFrameImputer(TransformerMixin):
         pass
 
     def fit(self, X, y=None):
-        self.fill = pd.Series([X[c].value_counts().index[0] if X[c].dtype == np.dtype('O') else X[c].mean() for c in X])
+        self.fill = pd.Series([X[c].value_counts().index[0] if X[c].dtype == np.dtype('O') else X[c].mean() for c in X],index=X.columns)
         # for c in X 得到的是X的列名
         return self
 
     def transform(self, X, y=None):
         return X.fillna(self.fill)
+train_data = DataFrameImputer().fit_transform(train_data)
+
+print(train_data['Sex'],train_data['Age'])
+
+train_data.to_csv('./data/train_transformed.csv')
