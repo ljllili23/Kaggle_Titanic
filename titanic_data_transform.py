@@ -7,7 +7,7 @@ contact: ljllili23@gmail.com
 """
 import numpy as np
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import OrdinalEncoder
+from sklearn.preprocessing import OrdinalEncoder,OneHotEncoder
 from sklearn.base import TransformerMixin
 import pandas as pd
 
@@ -45,8 +45,9 @@ train_data = DataFrameImputer().fit_transform(train_data)
 # print(train_data['Sex'],train_data['Age'])
 columns = train_data.columns
 print(columns.shape)
-encoder = OrdinalEncoder()
-train_data = encoder.fit_transform(train_data)
-print(train_data.shape)
-train_data = pd.DataFrame(data=train_data[:,:],index=train_data[:,0],columns = columns)
-train_data.to_csv('./data/train_transformed.csv')
+# encoder = OrdinalEncoder()
+# train_data = encoder.fit_transform(train_data)
+print(train_data.shape,train_data.columns)
+# train_data = pd.DataFrame(data=train_data[:,:],columns = columns)
+# print(train_data.columns)
+train_data.to_csv('./data/train_transformed.csv',index=False)
